@@ -31,6 +31,16 @@ module.exports.createListing=async (req,res)=>{
    let newListing = new Listing(req.body.listing);
    newListing.owner=req.user._id;
 
+     // If a file was uploaded via multer/cloudinary, attach its info
+     if (req.file) {
+         const file = req.file;
+         newListing.image = {
+             filename: file.filename || file.originalname || "listingimage",
+             url:
+                 file.path || file.location || file.secure_url || file.url || "",
+         };
+     }
+
    await newListing.save();
    req.flash("success","new Listisng Created Successfully!")
    res.redirect("/listings");

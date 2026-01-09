@@ -4,12 +4,16 @@ const Listing = require("../models/listing");
 const {reviewSchema}= require("../schema");
 const {isLoggedin ,isOwner}= require("../middleware.js");
 const ListingController = require("../controller/listing.js")
+const multer  = require('multer');
+const { storage } = require("../cloudConfig.js");
+const upload = multer({ storage });
 
 
 
 router.route("/")
 .get( ListingController.index)
-.post(isLoggedin,ListingController.createListing)
+//.post(isLoggedin,ListingController.createListing)
+.post(isLoggedin, upload.single('listing[image]'), ListingController.createListing);
 
 
 

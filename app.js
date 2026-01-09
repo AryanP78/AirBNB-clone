@@ -1,4 +1,6 @@
 require("dotenv").config();
+const cloudinary = require("cloudinary").v2;
+
 
 const express = require("express");
 const app =express();
@@ -39,6 +41,7 @@ async function main() {
     console.error(err);
   }
 }
+console.log(process.env.CLOUDINARY_API_KEY);
 
 main();
 
